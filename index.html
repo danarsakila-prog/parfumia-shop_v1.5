@@ -1,0 +1,1031 @@
+<!DOCTYPE html>
+<html lang="id" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Parfumia Shop - Luxe Fragrance Boutique & Trading</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Plus Jakarta Sans', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              purple: '#8B5CF6',
+              pink: '#EC4899',
+              blue: '#3B82F6',
+              dark: '#0F091A',
+              card: '#181028',
+              border: '#2E1D4A'
+            }
+          },
+          animation: {
+            'glow-pulse': 'glow 3s infinite alternate',
+            'float': 'float 4s ease-in-out infinite',
+          },
+          keyframes: {
+            glow: {
+              '0%': { boxShadow: '0 0 15px rgba(139, 92, 246, 0.3)' },
+              '100%': { boxShadow: '0 0 30px rgba(236, 72, 153, 0.6)' },
+            },
+            float: {
+              '0%, 100%': { transform: 'translateY(0px)' },
+              '50%': { transform: 'translateY(-6px)' },
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      background-color: #0B0614;
+      color: #F3F4F6;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      overflow-x: hidden;
+    }
+    
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #0B0614;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: linear-gradient(to bottom, #8B5CF6, #EC4899, #3B82F6);
+      border-radius: 4px;
+    }
+
+    .glass-card {
+      background: rgba(24, 16, 40, 0.75);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(139, 92, 246, 0.25);
+    }
+
+    .glass-nav {
+      background: rgba(15, 9, 26, 0.85);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(139, 92, 246, 0.25);
+    }
+
+    .text-gradient {
+      background: linear-gradient(135deg, #A855F7 0%, #EC4899 50%, #3B82F6 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .btn-gradient {
+      background: linear-gradient(135deg, #8B5CF6 0%, #EC4899 100%);
+      transition: all 0.3s ease;
+    }
+    .btn-gradient:hover {
+      background: linear-gradient(135deg, #7C3AED 0%, #DB2777 100%);
+      box-shadow: 0 0 20px rgba(236, 72, 153, 0.4);
+      transform: translateY(-2px);
+    }
+
+    .btn-blue-gradient {
+      background: linear-gradient(135deg, #3B82F6 0%, #8B5CF6 100%);
+      transition: all 0.3s ease;
+    }
+    .btn-blue-gradient:hover {
+      box-shadow: 0 0 20px rgba(59, 130, 246, 0.4);
+      transform: translateY(-2px);
+    }
+
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col antialiased selection:bg-pink-500 selection:text-white">
+
+  <div id="country-modal" class="fixed inset-0 bg-black/85 backdrop-blur-md z-50 flex items-center justify-center p-4">
+    <div class="glass-card max-w-md w-full rounded-2xl p-6 md:p-8 text-center border border-purple-500/40 shadow-2xl relative overflow-hidden">
+      <div class="absolute -top-12 -left-12 w-32 h-32 bg-purple-600/30 rounded-full blur-2xl"></div>
+      <div class="absolute -bottom-12 -right-12 w-32 h-32 bg-pink-600/30 rounded-full blur-2xl"></div>
+
+      <div class="relative z-10">
+        <div class="w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-to-tr from-purple-600 via-pink-500 to-blue-500 flex items-center justify-center text-3xl shadow-lg shadow-purple-500/30 animate-float">
+          👑
+        </div>
+        <h2 class="text-2xl md:text-3xl font-extrabold text-gradient mb-2">Parfumia Shop</h2>
+        <p class="text-slate-300 text-sm mb-6">Selamat datang! Silakan pilih negara untuk penyesuaian simulasi mata uang.</p>
+        
+        <label class="block text-left text-xs font-semibold text-purple-300 uppercase tracking-wider mb-2">Pilih Negara</label>
+        <select id="country-select" class="w-full bg-slate-900/90 border border-purple-500/30 text-slate-100 rounded-xl p-3.5 mb-6 focus:outline-none focus:border-pink-500 transition-all cursor-pointer">
+          <option value="IDN" selected>🇮🇩 Indonesia (IDR - Rp)</option>
+          <option value="USA">🇺🇸 Amerika Serikat (USD - $)</option>
+          <option value="JPN">🇯🇵 Jepang (JPY - ¥)</option>
+          <option value="GBR">🇬🇧 Inggris (GBP - £)</option>
+        </select>
+
+        <button onclick="setCountry()" class="w-full btn-gradient text-white font-bold py-3.5 px-6 rounded-xl shadow-lg transition duration-200 flex items-center justify-center gap-2">
+          <span>Masuk Ke Parfumia Shop</span>
+          <i class="fa-solid fa-arrow-right"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <header class="sticky top-0 z-40 glass-nav">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
+      
+      <!-- Brand Logo -->
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-purple-600 via-pink-500 to-blue-500 flex items-center justify-center text-xl shadow-md shadow-purple-500/30">
+          ✨
+        </div>
+        <div>
+          <h1 class="text-xl md:text-2xl font-extrabold text-gradient tracking-tight">Parfumia Shop</h1>
+          <p class="text-[10px] sm:text-xs text-purple-300/70 font-medium">Marketplace & Simulation Boutique</p>
+        </div>
+      </div>
+
+      <!-- Stats Widgets & Controls -->
+      <div class="flex items-center gap-2.5 sm:gap-3">
+        
+        <!-- Live Visitor Trigger Button -->
+        <button onclick="triggerSimulatedCustomer(true)" title="Klik untuk datangkan pembeli instan!" class="glass-card px-3 py-1.5 rounded-xl border border-emerald-500/40 hover:bg-emerald-500/10 transition-all flex items-center gap-2 text-xs text-emerald-300">
+          <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping"></span>
+          <span class="hidden md:inline font-semibold">Simulasi Pembeli</span>
+          <i class="fa-solid fa-user-plus text-xs"></i>
+        </button>
+
+        <!-- Total Revenue Widget -->
+        <div class="glass-card px-3 py-1.5 rounded-xl hidden sm:flex items-center gap-2 border border-pink-500/30">
+          <div class="w-7 h-7 rounded-lg bg-pink-500/20 text-pink-400 flex items-center justify-center font-bold text-xs">
+            <i class="fa-solid fa-chart-line"></i>
+          </div>
+          <div class="text-left">
+            <div class="text-[9px] uppercase font-semibold tracking-wider text-slate-400">Total Penjualan</div>
+            <div id="user-revenue-display" class="text-xs md:text-sm font-extrabold text-pink-400 font-mono">$0.00</div>
+          </div>
+        </div>
+
+        <!-- User Budget Widget ($500 Starting) -->
+        <div class="glass-card px-3 py-1.5 md:px-4 md:py-2 rounded-xl flex items-center gap-2.5 border border-purple-500/30 shadow-lg">
+          <div class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-sm">
+            <i class="fa-solid fa-wallet"></i>
+          </div>
+          <div class="text-left">
+            <div class="text-[10px] uppercase font-semibold tracking-wider text-slate-400">Saldo Kamu</div>
+            <div id="user-budget-display" class="text-sm md:text-base font-extrabold text-emerald-400 font-mono">$500.00</div>
+          </div>
+        </div>
+
+        <!-- Country Toggle -->
+        <button onclick="openCountryModal()" class="glass-card px-3 py-2 rounded-xl hover:border-pink-500/50 transition-all flex items-center gap-1.5 text-xs md:text-sm text-slate-300">
+          <span id="header-country-flag">🇮🇩</span>
+          <span id="header-country-code" class="font-bold hidden sm:inline">IDN</span>
+          <i class="fa-solid fa-chevron-down text-[10px] text-purple-400"></i>
+        </button>
+      </div>
+
+    </div>
+
+    <!-- Navigation Tabs -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex border-t border-purple-900/30 overflow-x-auto no-scrollbar">
+      <button onclick="switchTab('buy')" id="tab-buy" class="py-3 px-6 font-semibold text-sm border-b-2 border-pink-500 text-pink-400 flex items-center gap-2 whitespace-nowrap transition-all">
+        <i class="fa-solid fa-store text-base"></i>
+        <span>Beli Parfum (Katalog Toko)</span>
+        <span id="bot-count-badge" class="bg-purple-900/60 text-purple-200 text-[11px] px-2 py-0.5 rounded-full border border-purple-500/30">10</span>
+      </button>
+
+      <button onclick="switchTab('sell')" id="tab-sell" class="py-3 px-6 font-semibold text-sm border-b-2 border-transparent text-slate-400 hover:text-purple-300 flex items-center gap-2 whitespace-nowrap transition-all">
+        <i class="fa-solid fa-flask-vial text-base"></i>
+        <span>Buat & Jual Parfum Anda</span>
+      </button>
+
+      <button onclick="switchTab('inventory')" id="tab-inventory" class="py-3 px-6 font-semibold text-sm border-b-2 border-transparent text-slate-400 hover:text-purple-300 flex items-center gap-2 whitespace-nowrap transition-all">
+        <i class="fa-solid fa-box-archive text-base"></i>
+        <span>Koleksi Saya</span>
+        <span id="inventory-count-badge" class="bg-blue-900/60 text-blue-200 text-[11px] px-2 py-0.5 rounded-full border border-blue-500/30">0</span>
+      </button>
+
+      <button onclick="switchTab('sales-log')" id="tab-sales-log" class="py-3 px-6 font-semibold text-sm border-b-2 border-transparent text-slate-400 hover:text-purple-300 flex items-center gap-2 whitespace-nowrap transition-all">
+        <i class="fa-solid fa-receipt text-base"></i>
+        <span>Riwayat Penjualan</span>
+        <span id="sales-log-count-badge" class="bg-emerald-900/60 text-emerald-200 text-[11px] px-2 py-0.5 rounded-full border border-emerald-500/30">0</span>
+      </button>
+    </div>
+  </header>
+
+  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+    <!-- SECTION 1: BELI PARFUM (KATALOG TOKO UTAMA) -->
+    <section id="section-buy" class="space-y-6">
+      
+      <!-- Marketplace Banner -->
+      <div class="relative rounded-3xl overflow-hidden glass-card p-6 md:p-10 border border-purple-500/30 bg-gradient-to-r from-purple-950/80 via-indigo-950/70 to-slate-950/90 shadow-2xl">
+        <div class="absolute -right-10 -bottom-10 w-64 h-64 bg-pink-600/20 rounded-full blur-3xl"></div>
+        <div class="relative z-10 max-w-2xl">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-pink-500/10 text-pink-400 border border-pink-500/20 mb-3">
+            <i class="fa-solid fa-bolt text-xs"></i> Fragrance Marketplace & Live Store
+          </span>
+          <h2 class="text-2xl md:text-4xl font-extrabold text-white tracking-tight mb-3">
+            Pasar Parfum Eksklusif Parfumia
+          </h2>
+          <p class="text-slate-300 text-sm md:text-base leading-relaxed mb-6">
+            Beli parfum dari katalog Bot atau pajang parfum buatan Anda. Saldo Anda saat ini <span class="font-bold text-emerald-400 font-mono" id="banner-budget-text">$500.00</span>. Setiap parfum buatan Anda akan **tampil permanen di sini** dan dibeli berulang kali oleh pelanggan!
+          </p>
+
+          <!-- Search & Filter Controls -->
+          <div class="flex flex-col sm:flex-row gap-3">
+            <div class="relative flex-1">
+              <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-purple-400"></i>
+              <input type="text" id="search-buy-input" onkeyup="filterPerfumes()" placeholder="Cari nama parfum atau merek..." class="w-full bg-slate-900/90 border border-purple-500/30 text-white text-sm rounded-xl pl-11 pr-4 py-3 focus:outline-none focus:border-pink-500 transition">
+            </div>
+            <select id="sort-buy-select" onchange="filterPerfumes()" class="bg-slate-900/90 border border-purple-500/30 text-slate-200 text-sm rounded-xl px-4 py-3 focus:outline-none focus:border-pink-500 transition">
+              <option value="default">Urutkan: Default</option>
+              <option value="user-first">Parfumia Saya Pertama</option>
+              <option value="price-low">Harga: Terendah</option>
+              <option value="price-high">Harga: Tertinggi</option>
+              <option value="name">Nama (A-Z)</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Grid Header -->
+      <div class="flex items-center justify-between pt-2">
+        <h3 class="text-lg font-bold text-slate-100 flex items-center gap-2">
+          <i class="fa-solid fa-fire text-pink-500"></i>
+          Daftar Parfum Tersedia
+        </h3>
+        <span id="catalog-count-text" class="text-xs text-purple-300">Menampilkan 10 item</span>
+      </div>
+
+      <!-- Perfume Market Catalog Grid -->
+      <div id="perfume-buy-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <!-- Dynamically rendered via JS -->
+      </div>
+    </section>
+
+    <section id="section-sell" class="hidden space-y-6">
+      
+      <div class="glass-card rounded-3xl p-6 md:p-10 border border-purple-500/30 relative overflow-hidden">
+        <div class="absolute top-0 right-0 w-80 h-80 bg-blue-600/10 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="max-w-3xl">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-purple-500/10 text-purple-400 border border-purple-500/20 mb-3">
+            <i class="fa-solid fa-wand-magic-sparkles"></i> Laboratorium Racikan Parfum
+          </span>
+          <h2 class="text-2xl md:text-3xl font-extrabold text-gradient mb-2">
+            Racik & Tentukan Harga Jual Parfum Anda
+          </h2>
+          <p class="text-slate-300 text-sm mb-6">
+            Buat merek parfum Anda sendiri dan **tentukan harga jualnya secara bebas**. Parfum akan tetap ada di etalase toko dan pembeli otomatis akan membelinya, mengirim uangnya langsung ke saldo Anda!
+          </p>
+
+          <!-- Form Pembuatan Parfum -->
+          <form id="create-perfume-form" onsubmit="handleCreatePerfume(event)" class="space-y-5">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+              
+              <!-- Nama Parfum -->
+              <div>
+                <label class="block text-xs font-bold text-purple-300 uppercase tracking-wider mb-2">Nama Parfum *</label>
+                <div class="relative">
+                  <i class="fa-solid fa-bottle-droplet absolute left-4 top-1/2 -translate-y-1/2 text-purple-400"></i>
+                  <input type="text" id="p-name" required placeholder="Contoh: Velvet Noir Deluxe" class="w-full bg-slate-900/90 border border-purple-500/30 text-white text-sm rounded-xl pl-11 pr-4 py-3 focus:outline-none focus:border-pink-500">
+                </div>
+              </div>
+
+              <!-- Merk / Brand -->
+              <div>
+                <label class="block text-xs font-bold text-purple-300 uppercase tracking-wider mb-2">Merek / Brand *</label>
+                <div class="relative">
+                  <i class="fa-solid fa-copyright absolute left-4 top-1/2 -translate-y-1/2 text-pink-400"></i>
+                  <input type="text" id="p-brand" required placeholder="Contoh: Parfumia Artisan" class="w-full bg-slate-900/90 border border-purple-500/30 text-white text-sm rounded-xl pl-11 pr-4 py-3 focus:outline-none focus:border-pink-500">
+                </div>
+              </div>
+
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+              
+              <!-- Edisi / Catatan Aroma -->
+              <div>
+                <label class="block text-xs font-bold text-purple-300 uppercase tracking-wider mb-2">Edisi & Aroma</label>
+                <div class="relative">
+                  <i class="fa-solid fa-wind absolute left-4 top-1/2 -translate-y-1/2 text-blue-400"></i>
+                  <input type="text" id="p-edition" placeholder="Contoh: Woody Amber & Rose" class="w-full bg-slate-900/90 border border-purple-500/30 text-white text-sm rounded-xl pl-11 pr-4 py-3 focus:outline-none focus:border-pink-500">
+                </div>
+              </div>
+
+              <!-- Harga Jual Kustom -->
+              <div>
+                <label class="block text-xs font-bold text-purple-300 uppercase tracking-wider mb-2">Harga Jual Yang Diinginkan (USD $)*</label>
+                <div class="relative">
+                  <i class="fa-solid fa-tag absolute left-4 top-1/2 -translate-y-1/2 text-emerald-400"></i>
+                  <input type="number" id="p-price" min="1" step="any" value="75" oninput="updatePreviewText()" required placeholder="Bebas, misal: 75, 120, 250" class="w-full bg-slate-900/90 border border-purple-500/30 text-emerald-400 font-bold text-sm rounded-xl pl-11 pr-4 py-3 focus:outline-none focus:border-pink-500">
+                </div>
+                <p class="text-[11px] text-slate-400 mt-1">*Anda bebas menentukan harga jual. Setiap pembeli yang datang akan membayar harga ini.</p>
+              </div>
+
+            </div>
+
+            <!-- Custom Gambar & Icon Section -->
+            <div>
+              <label class="block text-xs font-bold text-purple-300 uppercase tracking-wider mb-2">Gambar / Logo Merk Parfum</label>
+
+              <!-- Option 1: URL Upload / Preset Icons -->
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-3">
+                <div class="md:col-span-2">
+                  <div class="relative">
+                    <i class="fa-solid fa-image absolute left-4 top-1/2 -translate-y-1/2 text-purple-400"></i>
+                    <input type="url" id="p-image-url" oninput="updateImagePreview()" placeholder="https://images.unsplash.com/... (URL Gambar)" class="w-full bg-slate-900/90 border border-purple-500/30 text-white text-sm rounded-xl pl-11 pr-4 py-3 focus:outline-none focus:border-pink-500">
+                  </div>
+                  <p class="text-[11px] text-slate-400 mt-1">Masukkan URL gambar botol/logo parfum, atau pilih preset visual di samping.</p>
+                </div>
+
+                <!-- Preset Bottle Style -->
+                <div>
+                  <select id="p-image-preset" onchange="applyPresetImage()" class="w-full bg-slate-900/90 border border-purple-500/30 text-slate-200 text-sm rounded-xl px-3 py-3 focus:outline-none focus:border-pink-500">
+                    <option value="">-- Pilih Preset Gambar --</option>
+                    <option value="https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&w=600&q=80">🔮 Violet Elegance</option>
+                    <option value="https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&w=600&q=80">🌸 Rose Gold Blossom</option>
+                    <option value="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=600&q=80">💎 Crystal Cyber</option>
+                    <option value="https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?auto=format&fit=crop&w=600&q=80">🌊 Deep Ocean Blue</option>
+                  </select>
+                </div>
+              </div>
+
+              <!-- Live Card Preview -->
+              <div class="mt-4 p-4 rounded-2xl bg-slate-900/50 border border-purple-500/20 flex items-center gap-4">
+                <div class="w-20 h-20 rounded-xl overflow-hidden bg-purple-950/60 border border-purple-500/30 flex items-center justify-center shrink-0">
+                  <img id="preview-img-element" src="https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&w=600&q=80" alt="Preview" class="w-full h-full object-cover">
+                </div>
+                <div>
+                  <div class="text-xs text-purple-400 font-semibold uppercase tracking-wider">Preview Visual Kartu Toko</div>
+                  <div id="preview-title" class="text-base font-bold text-white">Nama Parfum Kamu</div>
+                  <div id="preview-brand" class="text-xs text-slate-400">Merk • Harga Jual: $75.00</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="w-full btn-gradient text-white font-bold py-4 px-6 rounded-xl shadow-xl transition-all flex items-center justify-center gap-2 text-base">
+              <i class="fa-solid fa-store"></i>
+              <span>Terbitkan & Pajang Permanen di Toko</span>
+            </button>
+          </form>
+        </div>
+      </div>
+
+    </section>
+
+    <section id="section-inventory" class="hidden space-y-6">
+      
+      <div class="flex items-center justify-between">
+        <div>
+          <h2 class="text-2xl font-extrabold text-white">Koleksi Parfum Saya</h2>
+          <p class="text-slate-400 text-sm">Daftar parfum yang Anda beli dari toko. Anda bisa menjual kembali parfum koleksi Anda ke toko seharga <span class="text-emerald-400 font-bold">$59.00</span> per item.</p>
+        </div>
+      </div>
+
+      <!-- Inventory Grid Container -->
+      <div id="inventory-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <!-- Populated via JS -->
+      </div>
+
+    </section>
+
+    <section id="section-sales-log" class="hidden space-y-6">
+      
+      <div class="glass-card rounded-3xl p-6 md:p-8 border border-purple-500/30">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+          <div>
+            <span class="text-xs font-bold uppercase text-emerald-400 tracking-wider">Laporan Keuangan Toko</span>
+            <h2 class="text-2xl font-extrabold text-white">Riwayat Penjualan Parfum Anda</h2>
+            <p class="text-slate-400 text-sm">Setiap pembeli yang datang dan membeli parfum buatan Anda akan tercatat di sini secara otomatis.</p>
+          </div>
+
+          <button onclick="triggerSimulatedCustomer(true)" class="btn-gradient text-white text-xs font-bold py-3 px-5 rounded-xl shadow-lg flex items-center gap-2 shrink-0">
+            <i class="fa-solid fa-user-plus"></i>
+            <span>Simulasi Pembeli Datang</span>
+          </button>
+        </div>
+
+        <!-- Sales Log Table -->
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-sm text-slate-300">
+            <thead class="text-xs text-purple-300 uppercase bg-slate-900/80 border-b border-purple-900/40">
+              <tr>
+                <th class="p-3.5">Waktu</th>
+                <th class="p-3.5">Pembeli</th>
+                <th class="p-3.5">Parfum Yang Dibeli</th>
+                <th class="p-3.5">Harga Jual</th>
+                <th class="p-3.5 text-right">Pendapatan Saldo</th>
+              </tr>
+            </thead>
+            <tbody id="sales-log-tbody" class="divide-y divide-purple-900/20">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- Toast Container -->
+  <div id="toast-container" class="fixed bottom-6 right-6 z-50 flex flex-col gap-3 pointer-events-none"></div>
+
+  <script>
+    // System Data & Rates
+    const currencyData = {
+      USA: { name: "Amerika Serikat", symbol: "$", rate: 1, code: "USD", locale: "en-US" },
+      IDN: { name: "Indonesia", symbol: "Rp", rate: 15800, code: "IDR", locale: "id-ID" },
+      JPN: { name: "Jepang", symbol: "¥", rate: 152, code: "JPY", locale: "ja-JP" },
+      GBR: { name: "Inggris", symbol: "£", rate: 0.78, code: "GBP", locale: "en-GB" }
+    };
+
+    // Initial User State
+    let selectedCountry = "IDN";
+    let userBudgetUSD = 500.00; // Starting budget $500
+    let totalEarningsUSD = 0.00; // Total revenue tracking
+    const DEFAULT_SELL_BACK_PRICE_USD = 59.00; // Trade-in sell back return $59
+
+    // Bot Customer Names Generator
+    const customerNames = [
+      "Budi Santoso", "Siti Rahma", "Alexander Wright", "Elena Rostova", 
+      "Kaito Tanaka", "Clara Oswald", "Rian Hidayat", "Jessica Miller",
+      "David Chen", "Amina Al-Mansoor", "Lucas Silva", "Sophie Laurent"
+    ];
+
+    let perfumes = [
+      {
+        id: "bot-1",
+        name: "Furiux Alavador",
+        brand: "Parfumia Bot Inc.",
+        edition: "Original Luxury Edition",
+        priceUSD: 188,
+        seller: "Parfumia Bot",
+        isUserProduct: false,
+        image: "https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&w=600&q=80",
+        scent: "Oud, Amber & Black Pepper"
+      },
+      {
+        id: "bot-2",
+        name: "Alvanny Iska",
+        brand: "Iska Paris",
+        edition: "Classic Silk Line",
+        priceUSD: 150,
+        seller: "Parfumia Bot",
+        isUserProduct: false,
+        image: "https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&w=600&q=80",
+        scent: "Vanilla, Jasmine & Bergamot"
+      },
+      {
+        id: "bot-3",
+        name: "Campare Oktavin",
+        brand: "Oktavin Atelier",
+        edition: "Night Mystery Collection",
+        priceUSD: 100,
+        seller: "Parfumia Bot",
+        isUserProduct: false,
+        image: "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=600&q=80",
+        scent: "Dark Cedar & Leather"
+      },
+      {
+        id: "bot-4",
+        name: "Furiux Champage",
+        brand: "Parfumia Bot Inc.",
+        edition: "Gold Sparkling Luxury",
+        priceUSD: 200,
+        seller: "Parfumia Bot",
+        isUserProduct: false,
+        image: "https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?auto=format&fit=crop&w=600&q=80",
+        scent: "Sparkling Champagne & Peach"
+      },
+      {
+        id: "bot-5",
+        name: "Axius Falador",
+        brand: "Axius Sport",
+        edition: "Aroma Sport Intense",
+        priceUSD: 152,
+        seller: "Parfumia Bot",
+        isUserProduct: false,
+        image: "https://images.unsplash.com/photo-1588405748880-12d1d2a59f75?auto=format&fit=crop&w=600&q=80",
+        scent: "Citrus, Mint & Sea Salt"
+      },
+      {
+        id: "bot-6",
+        name: "Xin-O Lavins",
+        brand: "Lavins Perfumery",
+        edition: "Fresh Ocean Breeze",
+        priceUSD: 122,
+        seller: "Parfumia Bot",
+        isUserProduct: false,
+        image: "https://images.unsplash.com/photo-1587017539504-67cfbddac569?auto=format&fit=crop&w=600&q=80",
+        scent: "Ocean Spray & White Musk"
+      },
+      {
+        id: "bot-7",
+        name: "Tiger Fresh",
+        brand: "Wild Signature",
+        edition: "Wild Nature Edition",
+        priceUSD: 201,
+        seller: "Parfumia Bot",
+        isUserProduct: false,
+        image: "https://images.unsplash.com/photo-1557170334-a9632e77c6e4?auto=format&fit=crop&w=600&q=80",
+        scent: "Vetiver, Grapefruit & Spices"
+      },
+      {
+        id: "bot-8",
+        name: "Flaza La Vante",
+        brand: "La Vante Italy",
+        edition: "Summer Sun Breeze",
+        priceUSD: 99,
+        seller: "Parfumia Bot",
+        isUserProduct: false,
+        image: "https://images.unsplash.com/photo-1616949755610-8c9bbc08f138?auto=format&fit=crop&w=600&q=80",
+        scent: "Neroli, Mandarin & Fig"
+      },
+      {
+        id: "bot-9",
+        name: "Yuntai Alaxer",
+        brand: "Alaxer Oriental",
+        edition: "Mystic Wood Intense",
+        priceUSD: 123,
+        seller: "Parfumia Bot",
+        isUserProduct: false,
+        image: "https://images.unsplash.com/photo-1563178406-4cdc2923acbc?auto=format&fit=crop&w=600&q=80",
+        scent: "Sandalwood, Cardamom & Patchouli"
+      },
+      {
+        id: "bot-10",
+        name: "Hydro-O Sinth",
+        brand: "CyberAroma Tech",
+        edition: "Cyberpunk Glow Vibe",
+        priceUSD: 89,
+        seller: "Parfumia Bot",
+        isUserProduct: false,
+        image: "https://images.unsplash.com/photo-1523293182086-7651a899d37f?auto=format&fit=crop&w=600&q=80",
+        scent: "Electric Lavender & Metallic Amber"
+      }
+    ];
+
+    let userInventory = [];
+    let salesLog = [];
+
+    window.onload = function() {
+      updateBudgetDisplay();
+      renderPerfumes();
+      renderInventory();
+      renderSalesLog();
+      
+      document.getElementById("p-name")?.addEventListener("input", updatePreviewText);
+      document.getElementById("p-brand")?.addEventListener("input", updatePreviewText);
+
+      // Automated simulated customer coming every 18 seconds
+      setInterval(() => {
+        triggerSimulatedCustomer(false);
+      }, 18000);
+    };
+
+    function updatePreviewText() {
+      const name = document.getElementById("p-name").value.trim() || "Nama Parfum Kamu";
+      const brand = document.getElementById("p-brand").value.trim() || "Merk";
+      const price = parseFloat(document.getElementById("p-price").value) || 75;
+
+      document.getElementById("preview-title").innerText = name;
+      document.getElementById("preview-brand").innerText = `${brand} • Harga Jual: ${formatCurrency(price)}`;
+    }
+
+    function formatCurrency(amountInUSD) {
+      const curr = currencyData[selectedCountry];
+      const converted = Math.round(amountInUSD * curr.rate);
+
+      if (selectedCountry === "IDN") {
+        return `Rp ${converted.toLocaleString('id-ID')}`;
+      } else if (selectedCountry === "JPN") {
+        return `¥${converted.toLocaleString('ja-JP')}`;
+      } else if (selectedCountry === "GBR") {
+        return `£${converted.toLocaleString('en-GB')}`;
+      } else {
+        return `$${amountInUSD.toFixed(2)}`;
+      }
+    }
+
+    function updateBudgetDisplay() {
+      const formattedBudget = formatCurrency(userBudgetUSD);
+      const formattedRevenue = formatCurrency(totalEarningsUSD);
+
+      document.getElementById("user-budget-display").innerText = formattedBudget;
+      document.getElementById("user-revenue-display").innerText = formattedRevenue;
+      document.getElementById("banner-budget-text").innerText = formattedBudget;
+    }
+
+    function openCountryModal() {
+      document.getElementById("country-modal").style.display = "flex";
+    }
+
+    function setCountry() {
+      const select = document.getElementById("country-select");
+      selectedCountry = select.value;
+      const curr = currencyData[selectedCountry];
+
+      const flags = { USA: "🇺🇸", IDN: "🇮🇩", JPN: "🇯🇵", GBR: "🇬🇧" };
+      document.getElementById("header-country-flag").innerText = flags[selectedCountry];
+      document.getElementById("header-country-code").innerText = selectedCountry;
+
+      document.getElementById("country-modal").style.display = "none";
+
+      updateBudgetDisplay();
+      renderPerfumes();
+      renderInventory();
+      renderSalesLog();
+
+      showToast(`Mata uang diubah ke ${curr.name} (${curr.code})`, "info");
+    }
+
+    function switchTab(tabName) {
+      const sectionBuy = document.getElementById("section-buy");
+      const sectionSell = document.getElementById("section-sell");
+      const sectionInventory = document.getElementById("section-inventory");
+      const sectionSalesLog = document.getElementById("section-sales-log");
+
+      const tabBuy = document.getElementById("tab-buy");
+      const tabSell = document.getElementById("tab-sell");
+      const tabInventory = document.getElementById("tab-inventory");
+      const tabSalesLog = document.getElementById("tab-sales-log");
+
+      [tabBuy, tabSell, tabInventory, tabSalesLog].forEach(tab => {
+        tab.className = "py-3 px-6 font-semibold text-sm border-b-2 border-transparent text-slate-400 hover:text-purple-300 flex items-center gap-2 whitespace-nowrap transition-all";
+      });
+
+      [sectionBuy, sectionSell, sectionInventory, sectionSalesLog].forEach(sec => sec.classList.add("hidden"));
+
+      if (tabName === "buy") {
+        sectionBuy.classList.remove("hidden");
+        tabBuy.className = "py-3 px-6 font-semibold text-sm border-b-2 border-pink-500 text-pink-400 flex items-center gap-2 whitespace-nowrap transition-all";
+      } else if (tabName === "sell") {
+        sectionSell.classList.remove("hidden");
+        tabSell.className = "py-3 px-6 font-semibold text-sm border-b-2 border-purple-500 text-purple-400 flex items-center gap-2 whitespace-nowrap transition-all";
+      } else if (tabName === "inventory") {
+        sectionInventory.classList.remove("hidden");
+        tabInventory.className = "py-3 px-6 font-semibold text-sm border-b-2 border-blue-500 text-blue-400 flex items-center gap-2 whitespace-nowrap transition-all";
+      } else if (tabName === "sales-log") {
+        sectionSalesLog.classList.remove("hidden");
+        tabSalesLog.className = "py-3 px-6 font-semibold text-sm border-b-2 border-emerald-500 text-emerald-400 flex items-center gap-2 whitespace-nowrap transition-all";
+      }
+    }
+
+    function renderPerfumes() {
+      const container = document.getElementById("perfume-buy-grid");
+      const searchQuery = document.getElementById("search-buy-input") ? document.getElementById("search-buy-input").value.toLowerCase() : "";
+      const sortValue = document.getElementById("sort-buy-select") ? document.getElementById("sort-buy-select").value : "default";
+
+      let filtered = perfumes.filter(item => {
+        return item.name.toLowerCase().includes(searchQuery) || item.brand.toLowerCase().includes(searchQuery);
+      });
+
+      if (sortValue === "user-first") {
+        filtered.sort((a, b) => (b.isUserProduct ? 1 : 0) - (a.isUserProduct ? 1 : 0));
+      } else if (sortValue === "price-low") {
+        filtered.sort((a, b) => a.priceUSD - b.priceUSD);
+      } else if (sortValue === "price-high") {
+        filtered.sort((a, b) => b.priceUSD - a.priceUSD);
+      } else if (sortValue === "name") {
+        filtered.sort((a, b) => a.name.localeCompare(b.name));
+      }
+
+      document.getElementById("bot-count-badge").innerText = perfumes.length;
+      document.getElementById("catalog-count-text").innerText = `Menampilkan ${filtered.length} item`;
+
+      if (filtered.length === 0) {
+        container.innerHTML = `
+          <div class="col-span-full py-12 text-center text-slate-400 glass-card rounded-2xl">
+            <i class="fa-solid fa-bottle-droplet text-4xl text-purple-400 mb-3"></i>
+            <p class="text-base font-semibold">Tidak ada parfum yang cocok dengan pencarian.</p>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = "";
+
+      filtered.forEach((item) => {
+        const formattedPrice = formatCurrency(item.priceUSD);
+        const card = document.createElement("div");
+        
+        const badgeColor = item.isUserProduct 
+          ? "bg-pink-900/90 text-pink-200 border-pink-400/40" 
+          : "bg-purple-900/80 text-purple-200 border-purple-400/30";
+
+        card.className = `glass-card rounded-2xl overflow-hidden border ${item.isUserProduct ? 'border-pink-500/40' : 'border-purple-500/20'} hover:border-pink-500/60 transition-all duration-300 hover:-translate-y-1.5 flex flex-col justify-between group shadow-xl relative`;
+
+        card.innerHTML = `
+          <div>
+            <div class="relative h-48 w-full overflow-hidden bg-slate-900">
+              <img src="${item.image}" alt="${item.name}" onerror="this.src='https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&w=600&q=80'" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+              <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent"></div>
+              
+              <span class="absolute top-3 left-3 ${badgeColor} backdrop-blur-md text-[10px] font-bold px-2.5 py-1 rounded-full border shadow-md">
+                ${item.isUserProduct ? '✨ Toko Anda (User)' : item.seller}
+              </span>
+            </div>
+
+            <div class="p-5 space-y-2">
+              <div class="text-xs text-pink-400 font-semibold uppercase tracking-wider">${item.brand}</div>
+              <h4 class="text-lg font-bold text-white leading-snug group-hover:text-pink-300 transition">${item.name}</h4>
+              <p class="text-xs text-slate-400 line-clamp-1">${item.edition}</p>
+              
+              <div class="pt-2 flex items-center gap-1.5 text-xs text-purple-300">
+                <i class="fa-solid fa-spray-can text-[10px]"></i>
+                <span class="truncate">${item.scent || "Aroma Mewah Premium"}</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="p-5 pt-0 border-t border-purple-900/20 mt-3 flex items-center justify-between gap-2">
+            <div>
+              <div class="text-[10px] text-slate-400">Harga Jual Toko</div>
+              <div class="text-lg font-extrabold text-emerald-400 font-mono">${formattedPrice}</div>
+            </div>
+
+            <button onclick="buyPerfume('${item.id}')" class="btn-gradient text-white text-xs font-bold py-2.5 px-4 rounded-xl shadow-md flex items-center gap-1.5">
+              <i class="fa-solid fa-cart-shopping"></i>
+              <span>Beli</span>
+            </button>
+          </div>
+        `;
+
+        container.appendChild(card);
+      });
+    }
+
+    function filterPerfumes() {
+      renderPerfumes();
+    }
+
+    function buyPerfume(id) {
+      const target = perfumes.find(p => p.id === id);
+      if (!target) return;
+
+      if (userBudgetUSD < target.priceUSD) {
+        showToast(`Saldo Anda tidak cukup! Dibutuhkan $${target.priceUSD} USD, saldo Anda $${userBudgetUSD.toFixed(2)} USD.`, "error");
+        return;
+      }
+
+      userBudgetUSD -= target.priceUSD;
+      updateBudgetDisplay();
+
+      const newItem = {
+        ...target,
+        purchasedAt: new Date().toLocaleTimeString(),
+        uniqueId: 'inv-' + Date.now() + Math.random().toString(36).substr(2, 4)
+      };
+      userInventory.push(newItem);
+
+      renderInventory();
+      showToast(`Berhasil membeli "${target.name}" seharga ${formatCurrency(target.priceUSD)}! Sisa saldo: ${formatCurrency(userBudgetUSD)}`, "success");
+    }
+
+    function updateImagePreview() {
+      const url = document.getElementById("p-image-url").value;
+      const previewImg = document.getElementById("preview-img-element");
+      if (url.trim() !== "") {
+        previewImg.src = url;
+      }
+    }
+
+    function applyPresetImage() {
+      const select = document.getElementById("p-image-preset");
+      if (select.value) {
+        document.getElementById("p-image-url").value = select.value;
+        document.getElementById("preview-img-element").src = select.value;
+      }
+    }
+
+    // Creating perfume with PERMANENT presence in store
+    function handleCreatePerfume(e) {
+      e.preventDefault();
+
+      const name = document.getElementById("p-name").value.trim();
+      const brand = document.getElementById("p-brand").value.trim();
+      const edition = document.getElementById("p-edition").value.trim() || "Custom Artisan Edition";
+      const customPrice = parseFloat(document.getElementById("p-price").value) || 75.00;
+      let image = document.getElementById("p-image-url").value.trim();
+
+      if (!image) {
+        image = "https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&w=600&q=80";
+      }
+
+      const newPerfume = {
+        id: 'user-' + Date.now(),
+        name: name,
+        brand: brand,
+        edition: edition,
+        priceUSD: customPrice, // User's custom set price
+        seller: "Kamu (User)",
+        isUserProduct: true,
+        image: image,
+        scent: "Aroma Racikan Eksklusif"
+      };
+
+      // Add to store catalog PERMANENTLY (does not vanish on purchases)
+      perfumes.unshift(newPerfume);
+
+      document.getElementById("create-perfume-form").reset();
+      document.getElementById("preview-img-element").src = "https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&w=600&q=80";
+      updatePreviewText();
+
+      renderPerfumes();
+
+      showToast(`Selamat! Perfume "${name}" oleh ${brand} telah dipajang permanen di toko dengan harga ${formatCurrency(customPrice)}!`, "success");
+
+      switchTab("buy");
+    }
+
+    // Render User Inventory
+    function renderInventory() {
+      const container = document.getElementById("inventory-grid");
+      document.getElementById("inventory-count-badge").innerText = userInventory.length;
+
+      if (userInventory.length === 0) {
+        container.innerHTML = `
+          <div class="col-span-full py-16 text-center text-slate-400 glass-card rounded-2xl">
+            <div class="w-16 h-16 mx-auto mb-4 rounded-2xl bg-purple-900/40 text-purple-400 flex items-center justify-center text-2xl">
+              🎒
+            </div>
+            <h3 class="text-lg font-bold text-white mb-1">Koleksi Anda Masih Kosong</h3>
+            <p class="text-sm text-slate-400 mb-4">Beli parfum dari toko untuk menambahkannya ke koleksi pribadi Anda.</p>
+            <button onclick="switchTab('buy')" class="btn-gradient text-white text-xs font-bold py-2.5 px-5 rounded-xl">
+              Jelajahi Toko
+            </button>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = "";
+
+      userInventory.forEach((item, index) => {
+        const card = document.createElement("div");
+        card.className = "glass-card rounded-2xl overflow-hidden border border-purple-500/20 hover:border-blue-500/50 transition-all flex flex-col justify-between p-5";
+
+        card.innerHTML = `
+          <div>
+            <div class="relative h-40 w-full overflow-hidden rounded-xl bg-slate-900 mb-4">
+              <img src="${item.image}" alt="${item.name}" class="w-full h-full object-cover">
+              <span class="absolute top-2 right-2 bg-pink-900/80 text-pink-200 text-[10px] font-bold px-2 py-0.5 rounded-full border border-pink-500/30">
+                Koleksi Pribadi
+              </span>
+            </div>
+
+            <div class="text-xs text-blue-400 font-semibold uppercase tracking-wider mb-1">${item.brand}</div>
+            <h4 class="text-base font-bold text-white mb-1">${item.name}</h4>
+            <div class="text-xs text-slate-400 mb-3">${item.edition}</div>
+          </div>
+
+          <div class="pt-3 border-t border-purple-900/30 flex items-center justify-between gap-2">
+            <div>
+              <div class="text-[10px] text-slate-400">Pencairan Trade-in</div>
+              <div class="text-sm font-bold text-emerald-400 font-mono">${formatCurrency(DEFAULT_SELL_BACK_PRICE_USD)}</div>
+            </div>
+
+            <button onclick="sellBackPerfume('${item.uniqueId}', ${index})" class="btn-blue-gradient text-white text-xs font-bold py-2 px-3 rounded-xl flex items-center gap-1 shadow-md">
+              <i class="fa-solid fa-coins"></i>
+              <span>Jual ($59)</span>
+            </button>
+          </div>
+        `;
+
+        container.appendChild(card);
+      });
+    }
+
+    // Trade-in sell back owned inventory item for $59 USD
+    function sellBackPerfume(uniqueId, index) {
+      if (index < 0 || index >= userInventory.length) return;
+
+      const soldItem = userInventory[index];
+
+      userBudgetUSD += DEFAULT_SELL_BACK_PRICE_USD;
+      updateBudgetDisplay();
+
+      userInventory.splice(index, 1);
+      renderInventory();
+
+      showToast(`Berhasil mencairkan "${soldItem.name}"! Saldo bertambah +${formatCurrency(DEFAULT_SELL_BACK_PRICE_USD)}.`, "success");
+    }
+
+    function triggerSimulatedCustomer(isManualTrigger = false) {
+      const userPerfumes = perfumes.filter(p => p.isUserProduct);
+
+      if (userPerfumes.length === 0) {
+        if (isManualTrigger) {
+          showToast("Belum ada parfum buatan Anda di toko! Buatlah parfum terlebih dahulu di menu 'Buat & Jual Parfum'.", "error");
+        }
+        return;
+      }
+
+      const randomCustomer = customerNames[Math.floor(Math.random() * customerNames.length)];
+      const purchasedPerfume = userPerfumes[Math.floor(Math.random() * userPerfumes.length)];
+
+      // Customer pays full user custom price -> Money credited to user's budget!
+      userBudgetUSD += purchasedPerfume.priceUSD;
+      totalEarningsUSD += purchasedPerfume.priceUSD;
+      updateBudgetDisplay();
+
+      const logEntry = {
+        id: 'sale-' + Date.now(),
+        customer: randomCustomer,
+        perfumeName: purchasedPerfume.name,
+        brand: purchasedPerfume.brand,
+        priceUSD: purchasedPerfume.priceUSD,
+        time: new Date().toLocaleTimeString()
+      };
+      salesLog.unshift(logEntry);
+
+      renderSalesLog();
+
+      showToast(`🎉 <b>Pembeli Datang!</b> ${randomCustomer} baru saja membeli <b>"${purchasedPerfume.name}"</b> seharga ${formatCurrency(purchasedPerfume.priceUSD)}! Saldo Anda bertambah.`, "success");
+    }
+
+    function renderSalesLog() {
+      const tbody = document.getElementById("sales-log-tbody");
+      document.getElementById("sales-log-count-badge").innerText = salesLog.length;
+
+      if (salesLog.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="5" class="p-8 text-center text-slate-400">
+              Belum ada riwayat penjualan. Pembeli otomatis akan berkunjung untuk membeli parfum buatan Anda.
+            </td>
+          </tr>
+        `;
+        return;
+      }
+
+      tbody.innerHTML = "";
+      salesLog.forEach(log => {
+        const tr = document.createElement("tr");
+        tr.className = "hover:bg-purple-900/10 transition";
+        tr.innerHTML = `
+          <td class="p-3.5 font-mono text-xs text-slate-400">${log.time}</td>
+          <td class="p-3.5 font-semibold text-white">${log.customer}</td>
+          <td class="p-3.5 text-pink-300 font-medium">${log.perfumeName} <span class="text-xs text-slate-400">(${log.brand})</span></td>
+          <td class="p-3.5 font-mono text-slate-300">$${log.priceUSD.toFixed(2)}</td>
+          <td class="p-3.5 font-mono font-bold text-emerald-400 text-right">+${formatCurrency(log.priceUSD)}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function showToast(message, type = "info") {
+      const container = document.getElementById("toast-container");
+      const toast = document.createElement("div");
+
+      let bgColor = "bg-slate-900/95 border-purple-500 shadow-purple-500/20";
+      let icon = '<i class="fa-solid fa-circle-info text-purple-400"></i>';
+
+      if (type === "success") {
+        bgColor = "bg-slate-900/95 border-emerald-500 shadow-emerald-500/20";
+        icon = '<i class="fa-solid fa-circle-check text-emerald-400 text-lg"></i>';
+      } else if (type === "error") {
+        bgColor = "bg-slate-900/95 border-pink-500 shadow-pink-500/20";
+        icon = '<i class="fa-solid fa-triangle-exclamation text-pink-400 text-lg"></i>';
+      }
+
+      toast.className = `pointer-events-auto flex items-center gap-3 px-4 py-3.5 rounded-2xl border backdrop-blur-xl text-white text-xs md:text-sm shadow-2xl transition-all duration-300 transform translate-y-4 opacity-0 max-w-md ${bgColor}`;
+      toast.innerHTML = `
+        <div class="shrink-0">${icon}</div>
+        <div class="flex-1 font-medium leading-relaxed text-slate-100">${message}</div>
+      `;
+
+      container.appendChild(toast);
+
+      requestAnimationFrame(() => {
+        toast.classList.remove("translate-y-4", "opacity-0");
+      });
+
+      setTimeout(() => {
+        toast.classList.add("translate-y-4", "opacity-0");
+        setTimeout(() => toast.remove(), 300);
+      }, 4000);
+    }
+  </script>
+</body>
+</html>
